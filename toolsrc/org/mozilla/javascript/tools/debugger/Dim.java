@@ -711,11 +711,12 @@ public class Dim {
     /**
      * Evaluates the given script.
      */
-    public void evalScript(final String url, final String text) {
+    public Object evalScript(final String url, final String text) {
         DimIProxy action = new DimIProxy(this, IPROXY_EVAL_SCRIPT);
         action.url = url;
         action.text = text;
         action.withContext();
+        return action.objectResult;
     }
 
     /**
@@ -1080,7 +1081,7 @@ interruptedCheck:
                     if (scope == null) {
                         scope = new ImporterTopLevel(cx);
                     }
-                    cx.evaluateString(scope, text, url, 1, null);
+                    objectResult = cx.evaluateString(scope, text, url, 1, null);
                 }
                 break;
 
